@@ -21,6 +21,8 @@ class InternetRetryWidget @JvmOverloads constructor(
 
     private var retryClick: (() -> Unit)? = null
     private var networkObserver: NetworkLiveObserver? = null
+    private var currentState: WidgetState = WidgetState.CONTENT
+
 
     init {
 
@@ -64,12 +66,23 @@ class InternetRetryWidget @JvmOverloads constructor(
 
         // ✅ Initial state check (IMPORTANT)
         val isConnected = NetworkUtils.isInternetAvailable(context)
-        visibility = if (isConnected) GONE else VISIBLE
+
+        if (!isConnected) {
+            setState(WidgetState.NO_INTERNET)
+        } else {
+            setState(WidgetState.CONTENT)
+        }
 
         // ✅ Network observer (THIS WAS MISSING ❗)
         networkObserver = NetworkLiveObserver(context) { isConnected ->
             post {
-                visibility = if (isConnected) GONE else VISIBLE
+                if (!isConnected) {
+                    setState(WidgetState.NO_INTERNET)
+                } else {
+                    if (currentState == WidgetState.NO_INTERNET) {
+                        setState(WidgetState.CONTENT)
+                    }
+                }
             }
         }
     }
@@ -90,5 +103,35 @@ class InternetRetryWidget @JvmOverloads constructor(
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         networkObserver?.unregister()
+    }
+    fun setState(state: WidgetState, message: String? = null) {
+        currentState = state
+
+        when (state) {
+
+            WidgetState.LOADING -> {
+                visibility = VISIBLE
+                binding.progressBar.visibility = VISIBLE
+                binding.layoutContent.visibility = GONE
+            }
+
+            WidgetState.NO_INTERNET -> {
+                visibility = VISIBLE
+                binding.progressBar.visibility = GONE
+                binding.layoutContent.visibility = VISIBLE
+                binding.tvMessage.text = message ?: "No Internet Connection"
+            }
+
+            WidgetState.ERROR -> {
+                visibility = VISIBLE
+                binding.progressBar.visibility = GONE
+                binding.layoutContent.visibility = VISIBLE
+                binding.tvMessage.text = message ?: "Something went wrong"
+            }
+
+            WidgetState.CONTENT -> {
+                visibility = GONE
+            }
+        }
     }
 }
