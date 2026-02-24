@@ -44,7 +44,7 @@ dependencyResolutionManagement {
 
 ```gradle
 dependencies {
-	        implementation 'com.github.Excelsior-Technologies-Community:Android_AppPermissions:1.0.0'
+	        implementation 'com.github.Excelsior-Technologies-Community:Android_InternetRetryWidget:1.0.0'
 	}
 ```
 
