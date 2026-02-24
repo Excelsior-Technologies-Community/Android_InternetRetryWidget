@@ -22,7 +22,7 @@ A lightweight, customizable, and lifecycle-aware Android library to handle **net
 
 ### Preview
 
-<img src="assets/img.jpg" height="320" />
+<img src="assets/img.png" height="320" />
 
 ---
 
