@@ -22,11 +22,7 @@ class MainActivity : AppCompatActivity() {
         val retryWidget = findViewById<InternetRetryWidget>(R.id.retryWidget)
 
         retryWidget.setOnRetryClick {
-            if (NetworkUtils.isInternetAvailable(this)) {
-                Toast.makeText(this, "Internet Connected ✅", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Still No Internet ❌", Toast.LENGTH_SHORT).show()
-            }
+            Toast.makeText(this, "Retry Clicked 🔄", Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -12,6 +12,12 @@
     <com.ext.internetretrywidget.InternetRetryWidget
         android:id="@+id/retryWidget"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+
+        app:irw_message="No Internet Connection"
+        app:irw_buttonText="Retry Now"
+        app:irw_textColor="@android:color/holo_red_dark"
+        app:irw_buttonColor="@android:color/holo_blue_dark"
+        app:irw_icon="@android:drawable/ic_dialog_alert"/>
 
 </LinearLayout>
